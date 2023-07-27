@@ -1,7 +1,7 @@
 import './category-container.scss'
 import CategoryItem from '../category-item/category-item.component';
 
-const CategoryContainer = ({categories}) => {
+const CategoriesMenu = ({categories}) => {
     return (
         <div className="categories-container">
         {categories.map((category) => {
@@ -14,4 +14,4 @@ const CategoryContainer = ({categories}) => {
     )
 }
 
-export default CategoryContainer;
+export default CategoriesMenu;
