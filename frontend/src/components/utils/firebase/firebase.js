@@ -24,7 +24,9 @@ provider.setCustomParameters({
 });
 
 const auth = getAuth();
-const signInWithGoogle = () => signInWithPopup(auth, provider);
+const signInWithGooglePopUp = () => signInWithPopup(auth, provider);
+const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider);
+
 
 
 // This is firestore
@@ -38,13 +40,13 @@ const createUserProfileDocument = async (userAuth) => {
   if (!userDocSnap.exists()){
     const {displayName, email} = userAuth;
     const createAt = new Date();
-    
     try {
       await setDoc(userDocRef, {displayName, email, createAt});
     } catch (error) {
       console.log('error creating user', error.message);
     }
   }
+  console.log("sucess")
 
   return userDocRef;
 }  
@@ -53,5 +55,4 @@ const createUserProfileDocument = async (userAuth) => {
 
 
 
-
-export { signInWithGoogle, createUserProfileDocument }
+export { auth ,signInWithGooglePopUp, createUserProfileDocument, signInWithGoogleRedirect }
