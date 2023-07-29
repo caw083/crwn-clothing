@@ -1,5 +1,8 @@
 import Home from "./components/routes/Home/home";
 import Navigation from "./components/navigation/navigation";
+import SignIn from "./components/routes/SignIn/SignIn";
+
+
 import { Routes, Route } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -14,11 +17,6 @@ const Shop = () => {
 }
 
 
-const Signin = () => {
-  return (
-    <h1> i AM the signin Page</h1>
-  )
-}
 
 const ShopCategory = () => {
   const { category } = useParams()
@@ -37,7 +35,7 @@ function App() {
       <Route path="shop" element={<Shop/>}>
         <Route path=":category" element={<ShopCategory/>} />
       </Route>
-      <Route path="signin" element={<Signin/>} />
+      <Route path="signin" element={<SignIn/>} />
     
     </Route>
    </Routes>
