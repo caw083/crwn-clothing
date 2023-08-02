@@ -1,7 +1,13 @@
 import {initializeApp } from 'firebase/app';
-import {getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider} from 'firebase/auth';
+import {
+        getAuth, 
+        signInWithRedirect,
+        signInWithPopup, 
+        GoogleAuthProvider, 
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword
+      } from 'firebase/auth';
 import {getFirestore, doc, getDoc, setDoc}  from 'firebase/firestore';
-
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -32,7 +38,10 @@ const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider);
 // This is firestore
 const db = getFirestore(app);
 
-const createUserProfileDocument = async (userAuth) => {
+const createUserProfileDocument = async (userAuth, additionalInformation={}) => {
+
+  if (!userAuth) return;
+
   const userDocRef = doc(db, 'users', userAuth.uid);
   const userDocSnap = await getDoc(userDocRef);
   
@@ -41,18 +50,43 @@ const createUserProfileDocument = async (userAuth) => {
     const {displayName, email} = userAuth;
     const createAt = new Date();
     try {
-      await setDoc(userDocRef, {displayName, email, createAt});
-    } catch (error) {
+      await setDoc(userDocRef, {displayName, email, createAt, ...additionalInformation});
+    } 
+    catch (error) {
       console.log('error creating user', error.message);
     }
   }
-  console.log("sucess")
+  console.log("sucess");
 
   return userDocRef;
 }  
 
+const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+
+  return await createUserWithEmailAndPassword(auth, email, password);
+};
 
 
+const signAuthUserWithEmailAndPassword = async (email, password) =>{
+  if (!email || !password) return;
+  return await signInWithEmailAndPassword(auth, email, password);
+}
+const getUserData = async (userAuth) => {
+  try {
+    const { uid } = userAuth;
+    const userDocRef = doc(db, 'users', uid);
+    const userDocSnap = await getDoc(userDocRef);
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+      console.log(userData); // You can remove this line if you don't need the log
+      return userData;
+    }
+  } catch (error) {
+    console.error('Error fetching all user data:', error);
+    throw error;
+  }
+};
 
 
-export { auth ,signInWithGooglePopUp, createUserProfileDocument, signInWithGoogleRedirect }
+export { auth ,signInWithGooglePopUp, createUserProfileDocument, signInWithGoogleRedirect, createAuthUserWithEmailAndPassword, signAuthUserWithEmailAndPassword, getUserData }

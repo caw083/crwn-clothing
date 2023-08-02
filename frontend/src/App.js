@@ -1,7 +1,6 @@
 import Home from "./components/routes/Home/home";
 import Navigation from "./components/navigation/navigation";
-import SignIn from "./components/routes/SignIn/SignIn";
-
+import Authentification from "./components/routes/Authentification/Aunthentification";
 
 import { Routes, Route } from "react-router-dom";
 import { Outlet } from "react-router-dom";
@@ -30,12 +29,11 @@ function App() {
   return (
    <Routes>
     <Route path="/" element={<Navigation/>} >
-      
       <Route index element={<Home/>} />
       <Route path="shop" element={<Shop/>}>
         <Route path=":category" element={<ShopCategory/>} />
       </Route>
-      <Route path="signin" element={<SignIn/>} />
+      <Route path="signin" element={<Authentification/>} />
     
     </Route>
    </Routes>

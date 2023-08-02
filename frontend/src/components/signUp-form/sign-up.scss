@@ -1,0 +1,18 @@
+.Register {
+    width: 380px;
+    h2 {
+      margin: 10px 0;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+  }
+
+  #reset {
+    background-color: red;
+    color : wheat;
+
+  }
